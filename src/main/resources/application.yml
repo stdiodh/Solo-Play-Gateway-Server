@@ -1,0 +1,24 @@
+server:
+  max-http-request-header-size: 65536
+
+spring:
+  application:
+    name: solo-play-gateway-server
+  config:
+    import: optional:file:.env[.properties]
+
+  cloud:
+    gateway:
+      routes:
+        - id: solo-play-web-server
+          uri: http://solo-play-server-container:8080
+          predicates:
+            - Path=/api/**
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+    urls:
+      - name: Course Service API
+        url: http://solo-play-server-container:8080/api/place/v3/api-docs
+
