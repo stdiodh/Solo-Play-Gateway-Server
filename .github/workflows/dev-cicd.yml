@@ -45,6 +45,6 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPONAME }}:latest
             sudo docker stop solo-play-gateway-server-container
-            sudo docker container rm ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPONAME }}
-            sudo docker run -d -p ${{ secrets.API_PORT }}:8080 --name=solo-play-gateway-server-container --network=${{ secrets.NETWORK }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPONAME }}
+            sudo docker rm solo-play-gateway-server-container
+            sudo docker run -d -p ${{ secrets.API_PORT }}:${{ secrets.API_PORT }} --name=solo-play-gateway-server-container --network=${{ secrets.NETWORK }} --env-file=/home/${{ secrets.AWS_USER }}/app/${{ secrets.DOCKER_REPONAME }}/.env ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPONAME }}:latest
             sudo docker image prune -a -f
